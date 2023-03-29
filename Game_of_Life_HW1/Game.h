@@ -12,10 +12,14 @@ public:
 		cell() = default;
 		cell(const bool& alive);
 
+		void makeaVitalChange();
+		void getNeighbours();
+
 	private:
 		
 		int mNeighbours=0;
 		bool mAlive=false;
+		vector<vector<cell>>& mDishref;
 	};
 
 public:
@@ -26,6 +30,8 @@ public:
 	game(const int& sideA, const int& sideB, const float& Chance);
 	game(const int& height, const int& width, const int& top, const int& left, const vector<vector<cell>>& vect);
 
+	void Step();
+	bool anyAlive();
 
 private:
 
