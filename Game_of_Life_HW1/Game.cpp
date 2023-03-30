@@ -2,14 +2,17 @@
 #include <random>
 //----------------------------------------------------------------------------------------------------------------------
 //METHODS
+ 
+
+//game	
+
 void game::defDish() 
 {
 	int percent = round(mChance * 100);
 	for (size_t i = 0; i < mSideA; ++i)
 	{
-		for (size_t j = 0; j < mSideB; j++)
+		for (size_t j = 0; j < mSideB; ++j)
 		{
-			//todo
 			if (rand() % 100<percent)
 				mDish[i][j] = cell(true);
 			else
@@ -20,16 +23,62 @@ void game::defDish()
 
 void game::Step() 
 {
+	for (size_t i = 0; i < mSideA; ++i)
+	{
+		for (size_t j = 0; j < mSideB; ++j)
+		{
+			if ((mDish[i][j].getNeighbours() != 2 || mDish[i][j].getNeighbours() != 3) && !mDish[i][j].isAlive())
+				mDish[i][j].makeaVitalChange();
+		}
+	}
+
+}
+
+bool game::anyAlive() 
+{
+	for (size_t i = 0; i < mSideA; ++i)
+	{
+		for (size_t j = 0; j < mSideB; ++j)
+		{
+			if (mDish[i][j].isAlive())
+				return true;
+		}
+	}
+	return false;
+}
+
+
+
+//cell
+
+
+bool game::cell::isAlive() 
+{
+	return mAlive;
+}
+
+void game::cell::makeaVitalChange() 
+{
+	this->mAlive = false;
+}
+
+int game::cell::getNeighbours() 
+{
 
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 //CONSTRUCTORS
 
+
+//cell
 game::cell::cell(const bool& alive) 
 	: mAlive(alive)
 {}
 
+
+
+//game
 game::game(const int& height, const int& width, const int& top, const int& left, const vector<vector<game::cell>>& vect)
 	: mSideA(height)
 	, mSideB(width)

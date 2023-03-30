@@ -13,7 +13,8 @@ public:
 		cell(const bool& alive);
 
 		void makeaVitalChange();
-		void getNeighbours();
+		bool isAlive();
+		int getNeighbours();
 
 	private:
 		
