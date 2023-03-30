@@ -1,5 +1,9 @@
 #include "Game.h"
 #include <random>
+
+
+static int ID=0;
+
 //----------------------------------------------------------------------------------------------------------------------
 //METHODS
  
@@ -34,7 +38,7 @@ void game::Step()
 
 }
 
-bool game::anyAlive() 
+bool game::anyAlive() const
 {
 	for (size_t i = 0; i < mSideA; ++i)
 	{
@@ -52,7 +56,13 @@ bool game::anyAlive()
 //cell
 
 
-bool game::cell::isAlive() 
+bool game::cell::operator==(const cell& other) const 
+{
+	return (mcellID == other.mcellID);
+}
+
+
+bool game::cell::isAlive() const 
 {
 	return mAlive;
 }
@@ -62,9 +72,29 @@ void game::cell::makeaVitalChange()
 	this->mAlive = false;
 }
 
-int game::cell::getNeighbours() 
-{
 
+//vector<int> game::cell::getCoordinates() const
+//{
+//	vector<int> coordinates(2);
+//	for (size_t i = 0; i < mSideA; ++i)
+//	{
+//		for (size_t j = 0; j < mSideB; ++j)
+//		{
+//			if (mDish[i][j] == this)
+//			{
+//				coordinates[0] = i;
+//				coordinates[1] = j;
+//			}
+//		}
+//	}
+//	return coordinates;
+//}
+
+int game::cell::getNeighbours() const
+{
+	
+	
+	return 0;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -73,12 +103,15 @@ int game::cell::getNeighbours()
 
 //cell
 game::cell::cell(const bool& alive) 
-	: mAlive(alive)
+	: mcellID(ID++)
+	, mAlive(alive)
 {}
 
 
 
 //game
+
+//TODO
 game::game(const int& height, const int& width, const int& top, const int& left, const vector<vector<game::cell>>& vect)
 	: mSideA(height)
 	, mSideB(width)
@@ -118,9 +151,3 @@ game::game(const int& sideA)
 	, mDish(mSideA, vector<cell>(mSideB))
 {
 }
-
-//int mSideA;
-//int mSideB = 0;
-//float mChance = 0.1;
-//vector<vector<cell>> mDish;
-//bool mOver = false;

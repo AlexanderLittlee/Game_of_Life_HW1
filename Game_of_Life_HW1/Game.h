@@ -7,17 +7,22 @@ class game {
 public:
 	class cell {
 
+		
 	public:
 
 		cell() = default;
 		cell(const bool& alive);
 
+		bool operator==(const cell& other) const;
+
 		void makeaVitalChange();
-		bool isAlive();
-		int getNeighbours();
+		bool isAlive() const;
+		int getNeighbours() const;
+		//vector<int> getCoordinates() const;
 
 	private:
 		
+		int mcellID;
 		int mNeighbours=0;
 		bool mAlive=false;
 	};
@@ -32,7 +37,7 @@ public:
 
 	void defDish();
 	void Step();
-	bool anyAlive();
+	bool anyAlive() const;
 	
 
 private:
