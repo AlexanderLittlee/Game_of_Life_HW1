@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
-using namespace std;
+#include <cstdint>
+#include <iostream>
 
 class game {
 
@@ -14,11 +15,10 @@ public:
 		cell(const bool& alive);
 
 		bool operator==(const cell& other) const;
+		bool operator!=(const cell& other) const;
 
 		void makeaVitalChange();
 		bool isAlive() const;
-		int getNeighbours() const;
-		//vector<int> getCoordinates() const;
 
 	private:
 		
@@ -33,19 +33,27 @@ public:
 	game(const int& sideA, const int& sideB);
 	game(const int& sideA, const float& Chance);
 	game(const int& sideA, const int& sideB, const float& Chance);
-	game(const int& height, const int& width, const int& top, const int& left, const vector<vector<cell>>& vect);
+	game(const int& height, const int& width, const int& top, const int& left, const std::vector<std::vector<cell>>& vect);
+
+	friend std::ostream& operator<<(std::ostream& outputStream, const game& game);
+
+	std::vector<std::vector<cell>>& getDish();
+	int getSideA() const;
+	int getSideB() const;
 
 	void defDish();
+	void defDish(const int& xbegin, const int& xend, const int& ybegin, const int& yend, const bool& generate);
 	void Step();
 	bool anyAlive() const;
-	
+	int getNeighbours(const cell& c) const;
+	bool isOnDish(const int& x, const int& y) const;
 
 private:
 
 	int mSideA;
 	int mSideB=0;
 	float mChance = 0.1;
-	vector<vector<cell>> mDish;
+	std::vector<std::vector<cell>> mDish;
 	bool mOver = false;
 
 };
