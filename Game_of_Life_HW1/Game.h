@@ -35,7 +35,7 @@ public:
 	game(const int& sideA, const int& sideB, const float& Chance);
 	game(const int& height, const int& width, const int& top, const int& left, const std::vector<std::vector<cell>>& vect);
 
-	friend std::ostream& operator<<(std::ostream& outputStream, const game& game);
+	friend std::ostream& operator<<(std::ostream& outputStream, game& game);
 
 	std::vector<std::vector<cell>>& getDish();
 	int getSideA() const;

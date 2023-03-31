@@ -11,46 +11,6 @@ static int ID=0;
 
 
 //----------------------------------------------------------------------------------------------------------------------
-//OPERATORS
-
-
-//game
-
-std::ostream& operator<<(std::ostream& outputStream, game& game)
-{
-	int x = game.getSideA(), y = game.getSideB();
-	auto dish = game.getDish();
-
-	for (size_t i = 0; i < x; ++i)
-	{
-		for (size_t j = 0; j < y; ++j)
-		{
-			if (dish[i][j].isAlive())
-				outputStream << '■';
-			else
-				outputStream << '¨';
-		}
-	}
-	return outputStream;
-}
-
-
-//cell
-
-bool game::cell::operator==(const cell& other) const
-{
-	return (mcellID == other.mcellID);
-}
-
-bool game::cell::operator!=(const cell& other) const
-{
-	return !(*this == other);
-}
-
-
-
-
-//----------------------------------------------------------------------------------------------------------------------
 //METHODS
  
 
@@ -190,6 +150,49 @@ void game::cell::makeaVitalChange()
 {
 	this->mAlive = false;
 }
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
+//OPERATORS
+
+
+//game
+
+std::ostream& operator<<(std::ostream& outputStream, game& game)
+{
+	int x = game.getSideA(), y = game.getSideB();
+	auto dish = game.getDish();
+
+	for (size_t i = 0; i < x; ++i)
+	{
+		outputStream << "\n";
+		for (size_t j = 0; j < y; ++j)
+		{
+			if (dish[i][j].isAlive())
+				outputStream << "O";
+			else
+				outputStream << ".";
+		}
+	}
+	return outputStream;
+}
+
+
+//cell
+
+bool game::cell::operator==(const cell& other) const
+{
+	return (mcellID == other.mcellID);
+}
+
+bool game::cell::operator!=(const cell& other) const
+{
+	return !(*this == other);
+}
+
+
+
 
 
 
