@@ -34,6 +34,12 @@ int game::getSideB() const
 }
 
 
+float game::getChance() const 
+{
+	return mChance;
+}
+
+
 bool game::isOnDish(const int& x, const int& y) const
 {
 	return (x >= 0 && x < mDish.size() && y >= 0 && y < mDish[0].size());
@@ -163,7 +169,7 @@ std::ostream& operator<<(std::ostream& outputStream, game& game)
 {
 	int x = game.getSideA(), y = game.getSideB();
 	auto dish = game.getDish();
-
+	outputStream << "\tGame of Life\nDish size: "<<game.getSideA()<<"x"<<game.getSideB()<<"| chance: "<<game.getChance()*100<<"%\n";
 	for (size_t i = 0; i < x; ++i)
 	{
 		outputStream << "\n";
@@ -175,6 +181,7 @@ std::ostream& operator<<(std::ostream& outputStream, game& game)
 				outputStream << ".";
 		}
 	}
+	outputStream << "\n\n";
 	return outputStream;
 }
 

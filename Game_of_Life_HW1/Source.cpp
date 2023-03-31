@@ -2,10 +2,14 @@
 #include "Game.h"
 
 int main() {
-	game g1(25);
-	g1.Step();
+	uint_fast8_t maxstep = 100;
+	game g1(15,30,0.3f);
+	while (maxstep>0 && g1.anyAlive())
+	{
+		g1.Step();
+		std::cout <<g1;
+		--maxstep;
+		std::cin.get();
+	}
 
-	
-	
-	std::cout <<g1;
 }

@@ -40,6 +40,7 @@ public:
 	std::vector<std::vector<cell>>& getDish();
 	int getSideA() const;
 	int getSideB() const;
+	float getChance() const;
 
 	void defDish();
 	void defDish(const int& xbegin, const int& xend, const int& ybegin, const int& yend, const bool& generate);
