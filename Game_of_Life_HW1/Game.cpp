@@ -9,6 +9,13 @@
 
 static int ID=0;
 
+static int Rand() {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist(1, 100);
+	return dist(rd);
+}
+
 
 //----------------------------------------------------------------------------------------------------------------------
 //METHODS
@@ -71,7 +78,7 @@ void game::defDish(const int& xbegin, const int& xend, const int& ybegin, const 
 		{
 			if (generate)
 			{
-				if (rand() % 100<percent)
+				if (Rand()<percent)
 					mDish[i][j] = cell(true);
 				else
 					mDish[i][j] = cell(false);
