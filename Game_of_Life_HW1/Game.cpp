@@ -76,6 +76,7 @@ void game::defDish(const int& xbegin, const int& xend, const int& ybegin, const 
 				else
 					mDish[i][j] = cell(false);
 			}
+			else mDish[i][j] = cell(false);
 		}
 	}
 }
@@ -88,9 +89,11 @@ void game::Step()
 		for (size_t j = 0; j < mSideB; ++j)
 		{
 			int neighb = getNeighbours(mDish[i][j]);
+			if (mDish[i][j].isAlive() && (neighb != 2 || neighb != 3))
+				mDish[i][j].deadCell();
+			else if (!mDish[i][j].isAlive() && neighb == 3)
+				mDish[i][j].liveCell();
 
-			if ((neighb != 2 || neighb != 3) && !mDish[i][j].isAlive())
-				mDish[i][j].makeaVitalChange();
 		}
 	}
 
@@ -152,11 +155,16 @@ bool game::cell::isAlive() const
 }
 
 
-void game::cell::makeaVitalChange() 
+void game::cell::deadCell() 
 {
 	this->mAlive = false;
 }
 
+
+void game::cell::liveCell() 
+{
+	this->mAlive = true;
+}
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -176,9 +184,9 @@ std::ostream& operator<<(std::ostream& outputStream, game& game)
 		for (size_t j = 0; j < y; ++j)
 		{
 			if (dish[i][j].isAlive())
-				outputStream << "O";
+				outputStream << "*";
 			else
-				outputStream << ".";
+				outputStream << " ";
 		}
 	}
 	outputStream << "\n\n";

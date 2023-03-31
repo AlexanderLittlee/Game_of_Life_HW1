@@ -1,15 +1,19 @@
 #include <iostream>
 #include "Game.h"
-
-int main() {
-	uint_fast8_t maxstep = 100;
-	game g1(15,30,0.3f);
-	while (maxstep>0 && g1.anyAlive())
+void play(game& game,uint_fast8_t maxstep = 99 )
+{
+	while (maxstep<0 && game.anyAlive())
 	{
-		g1.Step();
-		std::cout <<g1;
+		game.Step();
+		std::cout <<game;
 		--maxstep;
 		std::cin.get();
 	}
+}
 
+
+int main() 
+{
+	game g1(15,30,0.25f);
+	play(g1);
 }

@@ -17,7 +17,8 @@ public:
 		bool operator==(const cell& other) const;
 		bool operator!=(const cell& other) const;
 
-		void makeaVitalChange();
+		void deadCell();
+		void liveCell();
 		bool isAlive() const;
 
 	private:
