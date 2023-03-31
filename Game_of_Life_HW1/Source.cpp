@@ -2,6 +2,7 @@
 #include "Game.h"
 #include <stdlib.h>
 
+
 void play(game& game,uint_fast8_t maxstep = 99 )
 {
 	std::cout << game;
@@ -18,11 +19,13 @@ void play(game& game,uint_fast8_t maxstep = 99 )
 	std::cout << "All cells have died, the Game of Life is OVER!" << std::endl << std::endl;
 }
 
+
 void ctor1Play(const int& sizeA=25) 
 {
 	game game(sizeA);
 	play(game);
 }
+
 
 void ctor2Play(const int& sizeA = 25, const int& sizeB = 45)
 {
@@ -30,7 +33,8 @@ void ctor2Play(const int& sizeA = 25, const int& sizeB = 45)
 	play(game);
 }
 
-void ctor3Play(const int& sizeA = 25, const float& chance=0.3f)
+
+void ctor3Play(const int& sizeA = 25, const float& chance=0.4f)
 {
 	game game(sizeA, chance);
 	play(game);
@@ -43,6 +47,7 @@ void ctor4Play(const int& sizeA = 25, const int& sizeB = 45, const float& chance
 	play(game);
 }
 
+
 void ctor5Play(const int& fullSizeA=25,const int& fullsizeB=40,const int& xstart=2,const int& ystart = 2,const int& sizeA = 20,const int& sizeB=20)
 {
 	game helper(sizeA,sizeB);
@@ -50,11 +55,37 @@ void ctor5Play(const int& fullSizeA=25,const int& fullsizeB=40,const int& xstart
 	play(game);
 }
 
+
 int main() 
 {
-	//ctor1Play();
-	//ctor2Play();
+	std::cout << std::endl << "\t\t\t\t\t\tGreetings!" << std::endl << std::endl << std::endl
+		<< "\tThis is the Game of Life, originally created by John Conway at Cambridge University, now" << std::endl
+		<< "\timplemented by me (Kiss Sandor) in C++. " << std::endl << std::endl
+		<< "\tPress enter to start the first game, which starts by constructing a game the simplest way." << std::endl
+		<< "\tTo make a step in the game, you have to press enter again. When the game is over, the next" << std::endl
+		<< "\tone, with an increasingly more complicated constructors calling (don't worry, they each " << std::endl
+		<< "\thave a pre-definde default value!) will start." << std::endl << std::endl
+		<< "\tThere will be 5 games of life, each a bit different from the previous. Stepping from one" << std::endl
+		<< "\tgame to the next is also done by pressing enter." << std::endl << std::endl << std::endl
+		<< "\tThat is all you need to know, have fun looking at cells living and dying! :)" << std::endl;
+	std::cin.get();
+
+	//play with constuctor game(const int& sideA)
+	ctor1Play();
+	std::cin.get();
+
+	//play with constuctor game(const int& sideA, const int& sideB)
+	ctor2Play();
+	std::cin.get();
+
+	//play with constuctor game(const int& sideA, const float& Chance)
 	ctor3Play();
-	//ctor4Play();
-	//ctor5Play();
+	std::cin.get();
+	
+	//play with constuctor game(const int& sideA, const int& sideB, const float& Chance)
+	ctor4Play();
+	std::cin.get();
+	
+	//play with constuctor game(const int& height, const int& width, const int& top, const int& left, const std::vector<std::vector<cell>>&vect)
+	ctor5Play();
 }
