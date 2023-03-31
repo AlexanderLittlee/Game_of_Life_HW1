@@ -126,18 +126,19 @@ int game::getNeighbours(const cell& c) const
 			{
 				x = i;
 				y = j;
+				goto countneigbours;
 			}
 		}
 	}
-
-	for (size_t i = x-1; i < x+1; ++i)
+	countneigbours:
+	for (size_t i = x-1; i < x+2; ++i)
 	{
-		for (size_t j = y-1; j < y+1; ++j)
+		for (size_t j = y-1; j < y+2; ++j)
 		{
 			if (isOnDish(i,j))
 			{
 				if (mDish[i][j] != c && mDish[i][j].isAlive())
-					neighbours;
+					neighbours++;
 			}
 		}
 	}

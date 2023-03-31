@@ -56,6 +56,6 @@ private:
 	int mSideB=0;
 	float mChance = 0.1;
 	std::vector<std::vector<cell>> mDish;
-	bool mOver = false;
+	
 
 };
