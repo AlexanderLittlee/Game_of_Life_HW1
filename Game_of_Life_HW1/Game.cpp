@@ -60,7 +60,7 @@ void game::defDish()
 	{
 		for (size_t j = 0; j < mSideB; ++j)
 		{
-			if (rand() % 100 < percent)
+			if (Rand()<percent)
 				mDish[i][j] = cell(true);
 			else
 				mDish[i][j] = cell(false);

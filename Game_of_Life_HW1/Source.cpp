@@ -56,7 +56,8 @@ void ctor5Play(const int& fullSizeA=25,const int& fullsizeB=40,const int& xstart
 }
 
 
-int main() 
+
+void wellcomeScr() 
 {
 	std::cout << std::endl << "\t\t\t\t\t\tGreetings!" << std::endl << std::endl << std::endl
 		<< "\tThis is the Game of Life, originally created by John Conway at Cambridge University, now" << std::endl
@@ -69,6 +70,13 @@ int main()
 		<< "\tgame to the next is also done by pressing enter." << std::endl << std::endl << std::endl
 		<< "\tThat is all you need to know, have fun looking at cells living and dying! :)" << std::endl;
 	std::cin.get();
+}
+
+
+
+int main() 
+{
+	wellcomeScr();
 
 	//play with constuctor game(const int& sideA)
 	ctor1Play();
