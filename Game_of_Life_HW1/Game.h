@@ -44,6 +44,7 @@ public:
 	int getSideB() const;
 	float getChance() const;
 
+	
 	void defDish();
 	void defDish(const int& xbegin, const int& xend, const int& ybegin, const int& yend, const bool& generate);
 	void Step();
@@ -51,6 +52,7 @@ public:
 	int getNeighbours(const int& x, const int& y);
 	bool anyAlive() const;
 	bool isOnDish(const int& x, const int& y) const;
+	bool isDone() const;
 
 private:
 
@@ -59,6 +61,7 @@ private:
 	float mChance = 0.1;
 	std::vector<std::vector<cell>> mDish;
 	std::vector<std::vector<int>> mNeighbourCount;
-	
+	int mStepCount=1;
+	int mMaxStepCount = 100;
 
 };

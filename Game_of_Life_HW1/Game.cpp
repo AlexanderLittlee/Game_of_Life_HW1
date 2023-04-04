@@ -53,6 +53,11 @@ bool game::isOnDish(const int& x, const int& y) const
 	return (x >= 0 && x < mDish.size() && y >= 0 && y < mDish[0].size());
 }
 
+bool game::isDone() const
+{
+	return mStepCount==mMaxStepCount;
+}
+
 
 void game::defDish()
 {
@@ -90,43 +95,6 @@ void game::defDish(const int& xbegin, const int& xend, const int& ybegin, const 
 }
 
 
-void game::Step() 
-{
-	getEveryNeighbour();
-	for (size_t i = 0; i < mSideA; ++i)
-	{
-		for (size_t j = 0; j < mSideB; ++j)
-		{
-			if (mDish[i][j].isAlive())
-			{
-				if (mNeighbourCount[i][j] < 2 || mNeighbourCount[i][j] > 3)
-					mDish[i][j].deadCell();
-			}
-			else 
-			{
-				if(mNeighbourCount[i][j] == 3)
-					mDish[i][j].liveCell();
-			}
-		}
-	}
-
-}
-
-
-bool game::anyAlive() const
-{
-	for (size_t i = 0; i < mSideA; ++i)
-	{
-		for (size_t j = 0; j < mSideB; ++j)
-		{
-			if (mDish[i][j].isAlive())
-				return true;
-		}
-	}
-	return false;
-}
-
-
 int game::getNeighbours(const int& x, const int& y)
 {
 	int ncount = 0;
@@ -150,8 +118,45 @@ void game::getEveryNeighbour()
 	for (size_t i = 0; i < mSideA; ++i)
 	{
 		for (size_t j = 0; j < mSideB; ++j)
-			mNeighbourCount[i][j] = getNeighbours(i,j);
+			mNeighbourCount[i][j] = getNeighbours(i, j);
 	}
+}
+
+
+void game::Step() 
+{
+	getEveryNeighbour();
+	for (size_t i = 0; i < mSideA; ++i)
+	{
+		for (size_t j = 0; j < mSideB; ++j)
+		{
+			if (mDish[i][j].isAlive())
+			{
+				if (mNeighbourCount[i][j] != 2 && mNeighbourCount[i][j] != 3)
+					mDish[i][j].deadCell();
+			}
+			else 
+			{
+				if(mNeighbourCount[i][j] == 3)
+					mDish[i][j].liveCell();
+			}
+		}
+	}
+	++mStepCount;
+}
+
+
+bool game::anyAlive() const
+{
+	for (size_t i = 0; i < mSideA; ++i)
+	{
+		for (size_t j = 0; j < mSideB; ++j)
+		{
+			if (mDish[i][j].isAlive())
+				return true;
+		}
+	}
+	return false;
 }
 
 
@@ -186,7 +191,7 @@ std::ostream& operator<<(std::ostream& outputStream, game& game)
 {
 	int x = game.getSideA(), y = game.getSideB();
 	auto dish = game.getDish();
-	outputStream << "\tGame of Life\nDish size: "<<game.getSideA()<<"x"<<game.getSideB()<<"| chance: "<<game.getChance()*100<<"%\n";
+	outputStream << "\tGame of Life\nDish size: "<<game.getSideA()<<"x"<<game.getSideB()<<"| chance: "<<game.getChance()*100<<"% | step: "<<game.mStepCount<<"/"<<game.mMaxStepCount<<std::endl;
 	for (size_t i = 0; i < x; ++i)
 	{
 		outputStream << "\n";

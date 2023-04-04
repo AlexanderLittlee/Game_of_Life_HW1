@@ -3,20 +3,22 @@
 #include <stdlib.h>
 
 
-void play(game& game,uint_fast8_t maxstep = 99 )
+void play(game& game)
 {
 	std::cout << game;
 	std::cin.get();
-	while (maxstep>0 && game.anyAlive())
+	while (!game.isDone() && game.anyAlive())
 	{
 		system("CLS");
 		game.Step();
 		std::cout <<game;
-		--maxstep;
 		std::cin.get();
 	}
 	system("CLS");
-	std::cout << "All cells have died, the Game of Life is OVER!" << std::endl << std::endl;
+	if(!game.anyAlive())
+		std::cout << "All cells have died, the Game of Life is OVER!" << std::endl << std::endl;
+	else
+		std::cout << "Your are out of steps, the Game of Life is OVER!" << std::endl << std::endl;
 }
 
 
@@ -34,7 +36,7 @@ void ctor2Play(const int& sizeA = 25, const int& sizeB = 90)
 }
 
 
-void ctor3Play(const int& sizeA = 25, const float& chance=0.4f)
+void ctor3Play(const int& sizeA = 25, const float& chance=0.42f)
 {
 	game game(sizeA, chance);
 	play(game);
