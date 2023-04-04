@@ -27,7 +27,7 @@ void ctor1Play(const int& sizeA=25)
 }
 
 
-void ctor2Play(const int& sizeA = 25, const int& sizeB = 45)
+void ctor2Play(const int& sizeA = 25, const int& sizeB = 90)
 {
 	game game(sizeA, sizeB);
 	play(game);
@@ -41,14 +41,14 @@ void ctor3Play(const int& sizeA = 25, const float& chance=0.4f)
 }
 
 
-void ctor4Play(const int& sizeA = 25, const int& sizeB = 45, const float& chance = 0.3f)
+void ctor4Play(const int& sizeA = 25, const int& sizeB = 90, const float& chance = 0.35f)
 {
 	game game(sizeA, sizeB, chance);
 	play(game);
 }
 
 
-void ctor5Play(const int& fullSizeA=25,const int& fullsizeB=40,const int& xstart=2,const int& ystart = 2,const int& sizeA = 20,const int& sizeB=20)
+void ctor5Play(const int& fullSizeA=25,const int& fullsizeB=90,const int& xstart=4,const int& ystart = 15,const int& sizeA = 20,const int& sizeB=70)
 {
 	game helper(sizeA,sizeB);
 	game game(fullSizeA, fullsizeB, xstart, ystart, helper.getDish());
@@ -70,6 +70,7 @@ void wellcomeScr()
 		<< "\tgame to the next is also done by pressing enter." << std::endl << std::endl << std::endl
 		<< "\tThat is all you need to know, have fun looking at cells living and dying! :)" << std::endl;
 	std::cin.get();
+	system("CLS");
 }
 
 
@@ -79,21 +80,36 @@ int main()
 	wellcomeScr();
 
 	//play with constuctor game(const int& sideA)
+	//default
 	ctor1Play();
+	//example
+	//ctor1Play(15);
 	std::cin.get();
 
 	//play with constuctor game(const int& sideA, const int& sideB)
+	//default
 	ctor2Play();
+	//example
+	//ctor2Play(20,60);
 	std::cin.get();
 
 	//play with constuctor game(const int& sideA, const float& Chance)
+	//default
 	ctor3Play();
+	//example
+	//ctor3Play(13,0.6f);
 	std::cin.get();
 	
 	//play with constuctor game(const int& sideA, const int& sideB, const float& Chance)
+	//default
 	ctor4Play();
+	//example
+	//ctor4Play(14,50,0.7f);
 	std::cin.get();
 	
 	//play with constuctor game(const int& height, const int& width, const int& top, const int& left, const std::vector<std::vector<cell>>&vect)
+	//default
 	ctor5Play();
+	//example
+	//ctor5Play(25,70,4,4,19,60);
 }

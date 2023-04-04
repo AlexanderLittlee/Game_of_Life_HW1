@@ -9,7 +9,8 @@
 
 static int ID=0;
 
-static int Rand() {
+static int Rand() 
+{
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dist(1, 100);
@@ -25,6 +26,7 @@ static int Rand() {
 
 std::vector<std::vector<game::cell>>& game::getDish()  
 {
+
 	return mDish;
 }
 
@@ -91,16 +93,15 @@ void game::defDish(const int& xbegin, const int& xend, const int& ybegin, const 
 
 void game::Step() 
 {
+	getEveryNeighbour();
 	for (size_t i = 0; i < mSideA; ++i)
 	{
 		for (size_t j = 0; j < mSideB; ++j)
 		{
-			int neighb = getNeighbours(mDish[i][j]);
-			if (mDish[i][j].isAlive() && (neighb != 2 || neighb != 3))
+			if (mDish[i][j].isAlive() && (mNeighbourCount[i][j] != 2 || mNeighbourCount[i][j] != 3))
 				mDish[i][j].deadCell();
-			else if (!mDish[i][j].isAlive() && neighb == 3)
+			else if (!mDish[i][j].isAlive() && mNeighbourCount[i][j] == 3)
 				mDish[i][j].liveCell();
-
 		}
 	}
 
@@ -121,36 +122,28 @@ bool game::anyAlive() const
 }
 
 
-int game::getNeighbours(const cell& c) const
+int game::getNeighbours(const int& x, const int& y)
 {
-	int neighbours = 0, x, y;
+	int ncount = 0;
+	for (size_t i = x - 1; i < x + 2; ++i)
+	{
+		for (size_t j = y - 1; j < y + 2; ++j)
+		{
+			if (isOnDish(i, j) && i != x && j != y && mDish[i][j].isAlive())
+				ncount++;
+		}
+	}
+	return ncount;
+}
 
+
+void game::getEveryNeighbour()
+{
 	for (size_t i = 0; i < mSideA; ++i)
 	{
 		for (size_t j = 0; j < mSideB; ++j)
-		{
-			if (mDish[i][j] == c)
-			{
-				x = i;
-				y = j;
-				goto countneigbours;
-			}
-		}
+			mNeighbourCount[i][j] = getNeighbours(i,j);
 	}
-	countneigbours:
-	for (size_t i = x-1; i < x+2; ++i)
-	{
-		for (size_t j = y-1; j < y+2; ++j)
-		{
-			if (isOnDish(i,j))
-			{
-				if (mDish[i][j] != c && mDish[i][j].isAlive())
-					neighbours++;
-			}
-		}
-	}
-	
-	return neighbours;
 }
 
 
@@ -192,7 +185,7 @@ std::ostream& operator<<(std::ostream& outputStream, game& game)
 		for (size_t j = 0; j < y; ++j)
 		{
 			if (dish[i][j].isAlive())
-				outputStream << "*";
+				outputStream << "O";
 			else
 				outputStream << " ";
 		}
@@ -238,6 +231,7 @@ game::game(const int& height, const int& width, const int& top, const int& left,
 	: mSideA(height)
 	, mSideB(width)
 	, mDish(height, std::vector<cell>(width))
+	, mNeighbourCount(mSideA, std::vector<int>(mSideB))
 {
 	this->defDish(0,mSideA,0,mSideB,false);
 	if (isOnDish(top,left) && isOnDish(top+vect.size(),left+vect[0].size()))
@@ -252,6 +246,7 @@ game::game(const int& sideA, const int& sideB, const float& Chance)
 	, mSideB(sideB)
 	, mChance(Chance)
 	, mDish(sideA, std::vector<cell>(sideB))
+	, mNeighbourCount(mSideA, std::vector<int>(mSideB))
 {
 	this->defDish();
 }
@@ -262,6 +257,7 @@ game::game(const int& sideA, const float& Chance)
 	, mSideB(sideA)
 	, mChance(Chance)
 	, mDish(sideA, std::vector<cell>(sideA))
+	, mNeighbourCount(mSideA, std::vector<int>(mSideB))
 {
 	this->defDish();
 }
@@ -270,6 +266,7 @@ game::game(const int& sideA,const int& sideB)
 	: mSideA(sideA)
 	, mSideB(sideB)
 	, mDish(sideA, std::vector<cell>(sideB))
+	, mNeighbourCount(mSideA, std::vector<int>(mSideB))
 {
 	this->defDish();
 }
@@ -278,6 +275,8 @@ game::game(const int& sideA)
 	: mSideA(sideA)
 	, mSideB(sideA)
 	, mDish(mSideA, std::vector<cell>(mSideB))
+	, mNeighbourCount(mSideA, std::vector<int>(mSideB))
 {
 	this->defDish();
 }
+

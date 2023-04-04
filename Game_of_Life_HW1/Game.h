@@ -35,6 +35,7 @@ public:
 	game(const int& sideA, const float& Chance);
 	game(const int& sideA, const int& sideB, const float& Chance);
 	game(const int& height, const int& width, const int& top, const int& left, const std::vector<std::vector<cell>>& vect);
+	
 
 	friend std::ostream& operator<<(std::ostream& outputStream, game& game);
 
@@ -46,8 +47,9 @@ public:
 	void defDish();
 	void defDish(const int& xbegin, const int& xend, const int& ybegin, const int& yend, const bool& generate);
 	void Step();
+	void getEveryNeighbour();
+	int getNeighbours(const int& x, const int& y);
 	bool anyAlive() const;
-	int getNeighbours(const cell& c) const;
 	bool isOnDish(const int& x, const int& y) const;
 
 private:
@@ -56,6 +58,7 @@ private:
 	int mSideB=0;
 	float mChance = 0.1;
 	std::vector<std::vector<cell>> mDish;
+	std::vector<std::vector<int>> mNeighbourCount;
 	
 
 };
