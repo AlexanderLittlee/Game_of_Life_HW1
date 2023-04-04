@@ -49,10 +49,14 @@ public:
 	void defDish(const int& xbegin, const int& xend, const int& ybegin, const int& yend, const bool& generate);
 	void Step();
 	void getEveryNeighbour();
+	void randCellMaker(const int& i, const int& j);
+
 	int getNeighbours(const int& x, const int& y);
+	
 	bool anyAlive() const;
 	bool isOnDish(const int& x, const int& y) const;
 	bool isDone() const;
+
 
 private:
 

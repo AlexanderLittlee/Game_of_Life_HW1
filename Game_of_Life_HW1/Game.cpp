@@ -59,37 +59,37 @@ bool game::isDone() const
 }
 
 
-void game::defDish()
+void game::randCellMaker(const int& i, const int& j)
 {
 	int percent = round(mChance * 100);
+	if (Rand() < percent)
+		mDish[i][j] = cell(true);
+	else
+		mDish[i][j] = cell(false);
+}
+
+
+void game::defDish()
+{
 	for (size_t i = 0; i < mSideA; ++i)
 	{
 		for (size_t j = 0; j < mSideB; ++j)
-		{
-			if (Rand()<percent)
-				mDish[i][j] = cell(true);
-			else
-				mDish[i][j] = cell(false);
-		}
+			randCellMaker(i, j);
+		
 	}
 }
 
 
 void game::defDish(const int& xbegin, const int& xend, const int& ybegin, const int& yend, const bool& generate)
 {
-	int percent = round(mChance * 100);
 	for (size_t i = xbegin; i < xend; ++i)
 	{
 		for (size_t j = ybegin; j < yend; ++j)
 		{
 			if (generate)
-			{
-				if (Rand()<percent)
-					mDish[i][j] = cell(true);
-				else
-					mDish[i][j] = cell(false);
-			}
-			else mDish[i][j] = cell(false);
+				randCellMaker(i, j);
+			else
+				mDish[i][j] = cell(false);
 		}
 	}
 }
@@ -103,10 +103,7 @@ int game::getNeighbours(const int& x, const int& y)
 		for (size_t j = y - 1; j < y + 2; ++j)
 		{
 			if (isOnDish(i, j) && i != x && j != y && mDish[i][j].isAlive())
-			{
 				ncount++;
-
-			}
 		}
 	}
 	return ncount;
@@ -130,15 +127,19 @@ void game::Step()
 	{
 		for (size_t j = 0; j < mSideB; ++j)
 		{
-			if (mDish[i][j].isAlive())
+			if (mDish[i][j].isAlive() 
+				&& (mNeighbourCount[i][j] == 2 || mNeighbourCount[i][j] == 3))
 			{
-				if (mNeighbourCount[i][j] != 2 && mNeighbourCount[i][j] != 3)
-					mDish[i][j].deadCell();
-			}
-			else 
-			{
-				if(mNeighbourCount[i][j] == 3)
 					mDish[i][j].liveCell();
+			}
+			else if(!mDish[i][j].isAlive()
+				&& mNeighbourCount[i][j] == 3)
+			{
+					mDish[i][j].liveCell();
+			}
+			else
+			{
+				mDish[i][j].deadCell();
 			}
 		}
 	}
