@@ -26,7 +26,6 @@ static int Rand()
 
 std::vector<std::vector<game::cell>>& game::getDish()  
 {
-
 	return mDish;
 }
 
@@ -98,10 +97,16 @@ void game::Step()
 	{
 		for (size_t j = 0; j < mSideB; ++j)
 		{
-			if (mDish[i][j].isAlive() && (mNeighbourCount[i][j] != 2 || mNeighbourCount[i][j] != 3))
-				mDish[i][j].deadCell();
-			else if (!mDish[i][j].isAlive() && mNeighbourCount[i][j] == 3)
-				mDish[i][j].liveCell();
+			if (mDish[i][j].isAlive())
+			{
+				if (mNeighbourCount[i][j] < 2 || mNeighbourCount[i][j] > 3)
+					mDish[i][j].deadCell();
+			}
+			else 
+			{
+				if(mNeighbourCount[i][j] == 3)
+					mDish[i][j].liveCell();
+			}
 		}
 	}
 
@@ -130,7 +135,10 @@ int game::getNeighbours(const int& x, const int& y)
 		for (size_t j = y - 1; j < y + 2; ++j)
 		{
 			if (isOnDish(i, j) && i != x && j != y && mDish[i][j].isAlive())
+			{
 				ncount++;
+
+			}
 		}
 	}
 	return ncount;
